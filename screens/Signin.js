@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import logo from '../assets/SUPERLY_logo.png'
 import { Colours } from '../components/Colours'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Signin = (props) => {
     const navigation = useNavigation()
@@ -24,13 +25,12 @@ const Signin = (props) => {
             setError('')
           }, 3000)
         } else {
-          setLoginText('LOGGING IN...')
           props.handler(email, password)
         }
       }
 
     return (
-        <KeyboardAvoidingView style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
             <View style={styles.logoContainer}>
                 <Image source={logo} style={styles.logo} />
                 <Text style={styles.error}>{error || props.error}</Text>
@@ -84,6 +84,7 @@ const Signin = (props) => {
                     <Text style={styles.buttonText2}>Register</Text>
                 </TouchableOpacity>
             </View>
+            <View style={{height: 100}} />
         </KeyboardAvoidingView>
     )
 }
@@ -96,7 +97,6 @@ const styles = StyleSheet.create({
       },
     logoContainer:{
         marginTop: 150,
-        marginBottom: 30,
         alignItems: 'center',
         justifyContent: 'center'
     },
